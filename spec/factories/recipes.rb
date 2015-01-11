@@ -3,7 +3,5 @@ FactoryGirl.define do
   	name "A New Recipe"
   	queued_for Time.now
   	serving_size 2
-
-  	procedure
   end
 end
