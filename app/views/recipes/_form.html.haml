@@ -1,0 +1,9 @@
+= form_for recipe do |f|
+  .form-group
+    = f.label :name, "Name"
+    = f.text_field :name, class: "form-control", placeholder: "Recipe name"
+  .form-group
+    = f.label :serving_size, "Serving size"
+    = f.text_field :serving_size, class: "form-control", placeholder: "Serving size"
+
+  = f.submit :class => "btn btn-primary"
