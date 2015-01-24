@@ -4,7 +4,7 @@ RSpec.describe RecipesController, :type => :controller do
 
   render_views
 
-  let(:recipe) { create(:recipe) }
+  let!(:recipe) { create(:recipe) }
 
   describe "GET index" do
     it "returns http success" do
@@ -45,11 +45,19 @@ RSpec.describe RecipesController, :type => :controller do
   describe "PUT update" do
     it "updates a recipe" do
       recipe_params =  { name: "A different name!" }
-      post :update, id: recipe.id, recipe: recipe_params
+      put :update, id: recipe.id, recipe: recipe_params
       recipe.reload
       expect(recipe.name).to eql("A different name!")
     end
   end
 
+  describe "POST destroy" do
+    it "destroys a recipe" do
+      expect {
+        # hack to get this to work work decent exposure
+        post :destroy, id: recipe.id, recipe: recipe.as_json # TODO: fix this
+      }.to change(Recipe, :count).by(-1)
+    end
+  end
 
 end

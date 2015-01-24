@@ -37,4 +37,12 @@ feature "Recipes" do
     expect(current_path).to eql(recipe_path(recipe))
   end
 
+  scenario "Admin deletes a recipe" do
+    visit recipe_path(recipe)
+    click_button "Delete"
+
+    expect(page).to have_text("\"#{recipe.name}\" was successfully deleted")
+    expect(current_path).to eql(recipes_path)
+  end
+
 end

@@ -32,6 +32,15 @@ class RecipesController < ApplicationController
     end
   end
 
+  def destroy
+    if recipe.destroy
+      redirect_to recipes_path
+      flash[:success] = "\"#{recipe.name}\" was successfully deleted"
+    else
+      render recipe
+    end
+  end
+
   private
 
   def recipe_params
