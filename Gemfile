@@ -12,6 +12,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'haml-rails'
 gem 'erb2haml'
 gem 'devise'
+gem 'decent_exposure'
 
 group :production do
   gem 'rails_12factor'
