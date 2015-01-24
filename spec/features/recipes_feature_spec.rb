@@ -2,10 +2,14 @@ require 'rails_helper'
 
 feature "Recipes" do
 
+  let(:recipe) { create(:recipe) }
   let(:new_recipe) { build(:recipe, :name => "Cereal", :serving_size => 1) }
 
   scenario "Admin creates a new recipe" do
-  	visit new_recipe_path
+    visit recipes_path
+    click_link "New Recipe"
+
+    expect(current_path).to eql(new_recipe_path)
 
   	fill_in "Name", with: new_recipe.name
   	fill_in "Serving size", with: new_recipe.serving_size
@@ -14,21 +18,23 @@ feature "Recipes" do
 
   	click_button "Create Recipe"
 
-    expect(page).to have_text("Recipe was successfully created")
-    expect(current_path).to eql(recipe_path(new_recipe)) # TODO: fix path
+    expect(page).to have_text("\"#{new_recipe.name}\" was successfully created")
+    expect(current_path).to eql(recipe_path(new_recipe))
   end
 
   scenario "Admin edits a recipe" do
-  	# visit new_recipe_path
+    visit recipe_path(recipe)
+    click_link "Edit"
 
-  	# fill_in "Name", with: "Cereal"
-  	# fill_in "Serving size", with: 1
+    expect(current_path).to eql(edit_recipe_path(recipe))
 
-  	# click_button "Create Recipe"
+    fill_in "Name", with: "A different name!"
 
-   #  expect(page).to have_text("Recipe was successfully created")
-   #  expect(current_path).to eql(recipe_path(Recipe.last)) # TODO: fix path
+    click_button "Update Recipe"
+    recipe.reload
+
+    expect(page).to have_text("\"#{recipe.name}\" was successfully updated")
+    expect(current_path).to eql(recipe_path(recipe))
   end
-
 
 end
