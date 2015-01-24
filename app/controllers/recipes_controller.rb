@@ -11,6 +11,7 @@ class RecipesController < ApplicationController
   def create
   	if recipe.save
 	  	redirect_to recipe
+      flash[:success] = "Recipe was successfully created"
 	  else
 	  	render action: :new
 	  end
