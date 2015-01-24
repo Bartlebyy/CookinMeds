@@ -18,7 +18,6 @@ RSpec.describe RecipesController, :type => :controller do
     it "returns http success" do
       get :new
       expect(response).to have_http_status(:success)
-      expect(assigns(:recipe)).to be_a_new(Recipe)
     end
   end
 
@@ -43,4 +42,15 @@ RSpec.describe RecipesController, :type => :controller do
       }.to change(Recipe, :count).by(1)
     end
   end
+
+  describe "PUT update" do
+    it "updates a recipe" do
+      recipe_params =  { name: "A different name!" }
+      post :update, id: recipe.id, recipe: recipe_params
+      recipe.reload
+      expect(recipe.name).to eql("A different name!")
+    end
+  end
+
+
 end

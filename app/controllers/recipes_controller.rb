@@ -22,6 +22,14 @@ class RecipesController < ApplicationController
   def edit
   end
 
+  def update
+    if recipe.save
+      redirect_to recipe
+    else
+      render action: :edit, id: recipe.id
+    end
+  end
+
   private
 
   def recipe_params
