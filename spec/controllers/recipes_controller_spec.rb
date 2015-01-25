@@ -51,11 +51,10 @@ RSpec.describe RecipesController, :type => :controller do
     end
   end
 
-  describe "POST destroy" do
+  describe "DELETE destroy" do
     it "destroys a recipe" do
       expect {
-        # hack to get this to work work decent exposure
-        post :destroy, id: recipe.id, recipe: recipe.as_json # TODO: fix this
+        delete :destroy, id: recipe.id
       }.to change(Recipe, :count).by(-1)
     end
   end
