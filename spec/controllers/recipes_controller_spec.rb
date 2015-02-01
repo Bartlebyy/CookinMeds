@@ -2,8 +2,6 @@ require 'rails_helper'
 
 RSpec.describe RecipesController, :type => :controller do
 
-  render_views
-
   let!(:recipe) { create(:recipe) }
 
   describe "GET index" do
@@ -35,9 +33,16 @@ RSpec.describe RecipesController, :type => :controller do
   end
 
   describe "POST create" do
+
+    let(:recipe_params) do
+      FactoryGirl.attributes_for(:recipe).merge!({
+        steps_attributes: [FactoryGirl.attributes_for(:step)]
+      })
+    end
+
     it "creates a recipe" do
       expect {
-        post :create, recipe: FactoryGirl.attributes_for(:recipe)
+        post :create, recipe: recipe_params
       }.to change(Recipe, :count).by(1)
     end
   end
