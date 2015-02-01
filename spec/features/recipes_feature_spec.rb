@@ -45,4 +45,12 @@ feature "Recipes" do
     expect(current_path).to eql(recipes_path)
   end
 
+  scenario "User views recipes" do
+    # TODO: Logged in users only
+    visit root_path
+    click_link "Recipe"
+
+    expect(current_path).to eql(recipes_path)
+  end
+
 end
