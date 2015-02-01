@@ -25,7 +25,7 @@ feature "Application" do
   end
 
   scenario "user logs out" do
-  	  login_as(user, scope: :user)
+      login_as(user, scope: :user)
       visit root_path
       click_link "Log out"
       expect(current_path).to eql(root_path)
