@@ -62,6 +62,13 @@ RSpec.describe RecipesController, :type => :controller do
         delete :destroy, id: recipe.id
       }.to change(Recipe, :count).by(-1)
     end
+
+    it "destroys all steps for that recipe" do
+      steps_count = recipe.steps.count
+      expect {
+        delete :destroy, id: recipe.id
+      }.to change(Step, :count).by(-steps_count)
+    end
   end
 
 end

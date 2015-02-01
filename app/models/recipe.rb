@@ -3,7 +3,7 @@ class Recipe < ActiveRecord::Base
 	has_many :people, through: :meals
 	has_many :reviews, through: :meals
 	has_many :ingredients
-	has_many :steps
+	has_many :steps, dependent: :destroy
 
 	validates_presence_of :name, :serving_size
   validate :at_least_one_step?
