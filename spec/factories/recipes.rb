@@ -4,12 +4,12 @@ FactoryGirl.define do
     queued_for Time.now
     serving_size 2
 
-    ignore do
-      steps_count 5
-    end
+    factory :recipe_with_steps do
+      ignore { steps_count 5 }
 
-    after :build do |recipe, evaluator|
-      recipe.steps << FactoryGirl.build_list(:step, evaluator.steps_count, recipe: nil)
+      after(:build) do |recipe, evaluator|
+        recipe.steps << build_list(:step, evaluator.steps_count, recipe: recipe)
+      end
     end
   end
 end

@@ -6,7 +6,6 @@ class Recipe < ActiveRecord::Base
 	has_many :steps, dependent: :destroy
 
 	validates_presence_of :name, :serving_size
-  validate :at_least_one_step?
 
   accepts_nested_attributes_for :steps
 
