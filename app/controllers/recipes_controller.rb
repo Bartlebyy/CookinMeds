@@ -36,7 +36,7 @@ class RecipesController < ApplicationController
   end
 
   def steps_params
-    [:id, :text, :position]
+    [:id, :text]
   end
 
 end
