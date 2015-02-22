@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe RecipesController, :type => :controller do
 
-  let(:recipe) { create(:recipe_with_steps) }
+  let(:recipe) { create(:recipe, :with_steps, :with_ingredients) }
 
   describe "GET index" do
     it "returns http success" do
@@ -33,26 +33,27 @@ RSpec.describe RecipesController, :type => :controller do
   end
 
   describe "POST create" do
-
-    let(:new_recipe) { build(:recipe_with_steps) }
+    let(:new_recipe) { build_stubbed(:recipe, :with_steps) }
     let(:recipe_params) { new_recipe.attributes.symbolize_keys }
     let(:step_count) { new_recipe.steps.count }
+    let(:ingredient_count) { new_recipe.ingredients.count }
+
+    let(:creating_a_recipe) { post :create, recipe: recipe_params }
 
     it "creates a recipe" do
-      expect {
-        post :create, recipe: recipe_params
-      }.to change(Recipe, :count).by(1)
+      expect { creating_a_recipe }.to change(Recipe, :count).by(1)
     end
 
     it "creates all steps for that recipe" do
-      expect {
-        post :create, recipe: recipe_params
-      }.to change(Step, :count).by(step_count)
+      expect { creating_a_recipe }.to change(Step, :count).by(step_count)
+    end
+
+    it "creates all ingredients for that recipe" do
+      expect { creating_a_recipe }.to change(Ingredient, :count).by(ingredient_count)
     end
   end
 
   describe "PUT update" do
-
     let(:name) { "A different name!" }
     let(:recipe_params) { { name: name } }
 
@@ -64,21 +65,12 @@ RSpec.describe RecipesController, :type => :controller do
   end
 
   describe "DELETE destroy" do
-
-    let(:steps_count) { recipe.steps.count }
-
     before(:each) { recipe }  # re-create the recipe so we can delete it
 
     it "destroys a recipe" do
       expect {
         delete :destroy, id: recipe.id
       }.to change(Recipe, :count).by(-1)
-    end
-
-    it "destroys all steps for that recipe" do
-      expect {
-        delete :destroy, id: recipe.id
-      }.to change(Step, :count).by(-steps_count)
     end
   end
 
