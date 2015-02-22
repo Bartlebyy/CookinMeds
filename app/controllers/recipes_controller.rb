@@ -1,14 +1,14 @@
 class RecipesController < ApplicationController
-	expose(:recipes)
-	expose(:recipe, attributes: :recipe_params)
+  expose(:recipes)
+  expose(:recipe, attributes: :recipe_params)
 
   def create
-  	if recipe.save
-	  	redirect_to recipe
+    if recipe.save
+      redirect_to recipe
       flash[:success] = "\"#{recipe.name}\" was successfully created"
-	  else
-	  	render action: :new
-	  end
+    else
+      render action: :new
+    end
   end
 
   def update
@@ -32,7 +32,11 @@ class RecipesController < ApplicationController
   private
 
   def recipe_params
-    params.require(:recipe).permit(:name, :queued_for, :serving_size)
+    params.require(:recipe).permit(:name, :queued_for, :serving_size, steps_attributes: steps_params)
+  end
+
+  def steps_params
+    [:id, :text]
   end
 
 end

@@ -14,6 +14,8 @@ gem 'erb2haml'
 gem 'devise'
 gem 'decent_exposure'
 
+gem 'acts_as_list'
+
 group :production do
   gem 'rails_12factor'
 end

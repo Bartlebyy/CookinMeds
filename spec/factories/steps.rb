@@ -1,6 +1,7 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
-
 FactoryGirl.define do
   factory :step do
+    sequence(:text) { |n| "Step #{n}: Do something!" }
+
+    recipe
   end
 end
